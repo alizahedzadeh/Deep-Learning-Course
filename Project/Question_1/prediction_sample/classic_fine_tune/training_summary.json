@@ -1,0 +1,64 @@
+{
+  "session_timestamp": "20250901_072844",
+  "config": {
+    "model_name": "google/gemma-2-2b-it",
+    "dataset_repo": "miladmim/slim-orca-dedup-chat-50k-persian",
+    "max_length": 1024,
+    "unfreeze_first_n": 2,
+    "unfreeze_last_n": 2,
+    "num_epochs": 2,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 16,
+    "learning_rate": 2e-05,
+    "warmup_ratio": 0.03,
+    "eval_steps": 500,
+    "save_steps": 500,
+    "session_timestamp": "20250901_072844"
+  },
+  "dataset_stats": {
+    "original_size": 40458,
+    "after_cleaning": 39943,
+    "final_pairs": 39943,
+    "roles_found": [
+      "",
+      "system",
+      "user",
+      "assistant",
+      "کاربر",
+      "دستیار"
+    ],
+    "role_distribution": {
+      "system": 40459,
+      "user": 40023,
+      "assistant": 40413,
+      "": 5,
+      "کاربر": 1,
+      "دستیار": 1
+    }
+  },
+  "model_info": {
+    "n_layers": 26,
+    "unfrozen": {
+      "first_n": 2,
+      "last_n": 2,
+      "lm_head": true
+    },
+    "trainable_params": 901287936,
+    "total_params": 2614341888,
+    "trainable_ratio": 0.3447475405328471
+  },
+  "training_metrics": {
+    "final_train_loss": 0.965979002999012,
+    "training_duration_seconds": 26955.43989109993,
+    "val_last_eval_loss": 0.9692679643630981,
+    "test_eval_loss": 0.9692679643630981,
+    "test_perplexity": 2.636014096635092
+  },
+  "paths": {
+    "output_dir": "./gemma_classic_ft_2/gemma2b_it_classic_ft_first2_last2_20250901_072844",
+    "config_file": "./gemma_classic_ft_2/config_20250901_072844.json",
+    "stats_file": "./gemma_classic_ft_2/dataset_stats_20250901_072844.json",
+    "loss_curve": "./gemma_classic_ft_2/gemma2b_it_classic_ft_first2_last2_20250901_072844/loss_curve.png",
+    "model_dir": "./gemma_classic_ft_2/gemma2b_it_classic_ft_first2_last2_20250901_072844/classic_ft_model"
+  }
+}

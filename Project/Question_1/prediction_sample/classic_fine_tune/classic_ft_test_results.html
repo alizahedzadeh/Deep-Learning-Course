@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Base vs Classic-FT — Test Comparison</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root {
+    --bg:#0f172a; --card:#111827; --ink:#e5e7eb; --muted:#9ca3af;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font: 16px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans"; }
+  header { padding:18px 20px; border-bottom:1px solid #1f2937; }
+  h1 { margin:0 0 6px 0; font-size:22px; }
+  .muted { color:var(--muted); font-size:14px; }
+  main { padding:18px; max-width:1280px; margin:0 auto; }
+  .grid { display:grid; grid-template-columns: 1fr; gap:16px; }
+  @media(min-width: 980px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .card { background: linear-gradient(180deg, rgba(31,41,55,.7), rgba(17,24,39,.9));
+          border:1px solid #1f2937; border-radius:16px; padding:16px; box-shadow: 0 2px 10px rgba(0,0,0,.35); }
+  .title { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; gap:12px; }
+  .pill { background:#111827; border:1px solid #1f2937; color:var(--muted); padding:2px 10px; border-radius:999px; font-size:12px; }
+  .key { color:var(--muted); font-size:13px; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:13px; }
+  pre { white-space:pre-wrap; word-wrap:break-word; }
+  mark.add     { background: rgba(34,197,94,.20); color:#d1fae5; padding:1px 3px; border-radius:6px; }
+  mark.del     { background: rgba(239,68,68,.20); color:#fee2e2; padding:1px 3px; border-radius:6px; text-decoration:line-through; }
+  mark.rep-add { background: rgba(59,130,246,.17); color:#dbeafe; padding:1px 3px; border-radius:6px; }
+  mark.rep-del { background: rgba(234,179,8,.18); color:#fef3c7; padding:1px 3px; border-radius:6px; text-decoration:line-through; }
+  .three { display:grid; grid-template-columns: 1fr; gap:10px; margin-top:10px; }
+  @media(min-width: 980px) { .three { grid-template-columns: 1fr 1fr 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Base vs Classic-FT — Test Comparison</h1>
+  <div class="muted mono">
+    Base: google/gemma-2-2b-it &nbsp;|&nbsp;
+    Tuned model: ./gemma_classic_ft_2/gemma2b_it_classic_ft_first2_last2_20250901_072844/classic_ft_model &nbsp;|&nbsp;
+    test_size=0.1 · seed=42 · samples=12 ·
+    split(T/V/Te)=31954/3994/3995
+  </div>
+</header>
+<main>
+<div class="grid">
+
+    <section class="card">
+      <div class="title">
+        <div><b>Example #1</b></div>
+        <div class="mono"><span class='pill'>len(gold)=62w</span> <span class='pill'>len(pre)=90w</span> <span class='pill'>len(post)=19w</span> <span class='pill'>overlap(pre)=0.13</span> <span class='pill'>overlap(post)=0.34</span> <span class='pill'>test_index=102</span></div>
+      </div>
+      <div class='key'><b>System</b>: شما یک دستیار مفید هستید که همیشه توضیحات می‌دهید. طوری فکر کنید که انگار به یک کودک پنج ساله پاسخ می‌دهید.</div>
+      <div class="key"><b>Prompt</b></div>
+      <div class="mono">به فارسی ترجمه کنید:
+
+جدول‌های جفت‌سازی برای پنج گونه از هیمنومیکت‌های هموتالیک ثانویه، آگاریکوس بیسپوروس (لانژ) ایمباخ، الئورودیسکوس کانادنسس اسکولکو، کونوکیبه پوبسنس (گیل.)</div>
+      <div class="three" style="margin-top:10px;">
+        <div>
+          <div class="key"><b>Gold</b></div>
+          <pre class="mono">من این را برای شما به فارسی ترجمه می‌کنم. نام‌های علمی ممکن است سخت باشند، اما سعی می‌کنم بهترین کارم را انجام دهم!
+
+جدول‌های جفت‌سازی برای پنج گونه از هیمنومیکت‌های هموتالیک ثانویه، آگاریکوس بیسپوروس (لانژ) ایمباخ، الئورودیسکوس کانادنسس اسکولکو، کونوکیبه پوبسنس (گیل.)
+
+این نام‌ها نوعی قارچ هستند و این جدول‌ها نشان می‌دهند که چگونه آنها به نوعی با یکدیگر ارتباط برقرار می‌کنند.</pre>
+        </div>
+        <div>
+          <div class="key"><b>Base → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>من این را برای شما</mark> <mark class='rep-add'>سلام! می‌خواهم درباره هیمنومیکت‌ها صحبت کنم. هیمنومیکت‌ها مثل موجوداتی هستند که در طبیعت پیدا می‌شوند و می‌توانند</mark> به <mark class='rep-del'>فارسی ترجمه می‌کنم. نام‌های علمی ممکن است سخت باشند، اما سعی می‌کنم بهترین کارم را انجام دهم! جدول‌های</mark> <mark class='rep-add'>شکل‌های مختلفی در آب، زمین و هوا دیده شوند. اینجا جدول</mark> جفت‌سازی برای پنج <mark class='rep-del'>گونه از هیمنومیکت‌های هموتالیک ثانویه، آگاریکوس</mark> <mark class='rep-add'>نوع هیمنومیکت وجود دارد که به نام‌های مختلفی شناخته می‌شوند: * **آگاریکوس</mark> بیسپوروس <mark class='rep-del'>(لانژ) ایمباخ، الئورودیسکوس</mark> <mark class='rep-add'>(لانژ)** * **الئورودیسکوس</mark> کانادنسس <mark class='rep-del'>اسکولکو، کونوکیبه</mark> <mark class='rep-add'>اسکولکو** * **کونوکیبه</mark> پوبسنس <mark class='rep-del'>(گیل.)</mark> <mark class='rep-add'>(گیل.)** جفت‌سازی یعنی اینکه دو نوع هیمنومیکت با هم मिलابند و مثل یک خانواده تشکیل بدهند.</mark> این <mark class='rep-del'>نام‌ها نوعی قارچ هستند و این جدول‌ها نشان می‌دهند که چگونه آنها</mark> <mark class='rep-add'>جدول</mark> به <mark class='rep-del'>نوعی</mark> <mark class='rep-add'>ما کمک می‌کند تا بفهمیم کدام نوع هیمنومیکت‌ها</mark> با <mark class='rep-del'>یکدیگر ارتباط برقرار</mark> <mark class='rep-add'>هم جفت‌سازی</mark> می‌کنند. <mark class='add'>آیا می‌خواهید بیشتر درباره هیمنومیکت‌ها بدانید؟</mark></pre>
+        </div>
+        <div>
+          <div class="key"><b>Classic-FT → Gold diff</b></div>
+          <pre class="mono"><mark class='del'>من این را برای شما به فارسی ترجمه می‌کنم. نام‌های علمی ممکن است سخت باشند، اما سعی می‌کنم بهترین کارم را انجام دهم!</mark> جدول‌های جفت‌سازی برای پنج گونه از هیمنومیکت‌های هموتالیک ثانویه، آگاریکوس بیسپوروس (لانژ) ایمباخ، الئورودیسکوس کانادنسس اسکولکو، کونوکیبه پوبسنس (گیل.) <mark class='del'>این نام‌ها نوعی قارچ هستند و این جدول‌ها نشان می‌دهند که چگونه آنها به نوعی با یکدیگر ارتباط برقرار می‌کنند.</mark></pre>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="card">
+      <div class="title">
+        <div><b>Example #2</b></div>
+        <div class="mono"><span class='pill'>len(gold)=25w</span> <span class='pill'>len(pre)=115w</span> <span class='pill'>len(post)=40w</span> <span class='pill'>overlap(pre)=0.17</span> <span class='pill'>overlap(post)=0.31</span> <span class='pill'>test_index=419</span></div>
+      </div>
+      <div class='key'><b>System</b>: شما یک دستیار هوش مصنوعی هستید. به شما یک وظیفه داده خواهد شد. شما باید یک پاسخ مفصل و طولانی تولید کنید.</div>
+      <div class="key"><b>Prompt</b></div>
+      <div class="mono">من به طور خاص به حق اقامت در یک کشور بعد از اینکه قربانی به قاچاق انسان گرفتار شده و شاید نجات یافته است، اشاره می‌کنم.</div>
+      <div class="three" style="margin-top:10px;">
+        <div>
+          <div class="key"><b>Gold</b></div>
+          <pre class="mono">من به طور خاص به حق اقامت در یک کشور برای افرادی که قربانی قاچاق انسان شده‌اند و ممکن است نجات یافته باشند، اشاره می‌کنم.</pre>
+        </div>
+        <div>
+          <div class="key"><b>Base → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>من به طور خاص به</mark> <mark class='rep-add'>##</mark> حق اقامت در <mark class='del'>یک</mark> کشور <mark class='rep-del'>برای افرادی که قربانی</mark> <mark class='rep-add'>بعد از قاچاق انسان: چالش‌ها و راه حل‌های قانونی</mark> قاچاق انسان <mark class='rep-del'>شده‌اند</mark> <mark class='rep-add'>یک موضوع پیچیده</mark> و <mark class='rep-del'>ممکن</mark> <mark class='rep-add'>دردناک</mark> است <mark class='add'>که با رنج‌های فراوانی برای قربانیان همراه است. در این شرایط، مسئله حق اقامت در کشور بعد از</mark> نجات <mark class='rep-del'>یافته باشند، اشاره می‌کنم.</mark> <mark class='rep-add'>از قاچاق انسان، یک چالش جدی و پیچیده است که نیازمند بررسی دقیق و دقیق از قوانین و مقررات مربوطه دارد. **نکات کلیدی:** * **قانون و مقررات:** هر کشوری قوانین و مقررات خاص خود را برای موضوع قاچاق انسان و حق اقامت بعد از نجات دارد. * **دلیل نجات:** مهمترین عامل در granting of asylum یا حق اقامت، دلیل نجات از قاچاق انسان است. * **شرایط و مدارک:** برای درخواست حق اقامت، باید مد</mark></pre>
+        </div>
+        <div>
+          <div class="key"><b>Classic-FT → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>من</mark> <mark class='rep-add'>این متن</mark> به <mark class='rep-del'>طور</mark> <mark class='rep-add'>زبان چکی نوشته شده است. ترجمه انگلیسی آن به این صورت است: &quot;من به‌طور</mark> خاص به حق اقامت در یک کشور <mark class='rep-del'>برای افرادی که</mark> <mark class='rep-add'>بعد از اینکه</mark> قربانی <mark class='add'>به</mark> قاچاق انسان <mark class='rep-del'>شده‌اند</mark> <mark class='rep-add'>گرفتار شده</mark> و <mark class='rep-del'>ممکن است</mark> <mark class='rep-add'>شاید</mark> نجات یافته <mark class='rep-del'>باشند،</mark> <mark class='rep-add'>است،</mark> اشاره <mark class='rep-del'>می‌کنم.</mark> <mark class='rep-add'>می‌کنم.&quot;</mark></pre>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="card">
+      <div class="title">
+        <div><b>Example #3</b></div>
+        <div class="mono"><span class='pill'>len(gold)=154w</span> <span class='pill'>len(pre)=121w</span> <span class='pill'>len(post)=102w</span> <span class='pill'>overlap(pre)=0.14</span> <span class='pill'>overlap(post)=0.20</span> <span class='pill'>test_index=456</span></div>
+      </div>
+      <div class='key'><b>System</b>: شما یک دستیار هوش مصنوعی هستید. کاربر یک وظیفه به شما خواهد داد. هدف شما این است که وظیفه را به بهترین شکل ممکن انجام دهید. در حین انجام وظیفه، مرحله به مرحله فکر کنید و مراحل خود را توجیه کنید.</div>
+      <div class="key"><b>Prompt</b></div>
+      <div class="mono">&quot;آخرین بوسه احتمالاً هرگز به محبوبیت عروسی بزرگ و چاق یونانی نخواهد رسید، اما صحنه مرکزی عروسی آن تأثیر بسیار بیشتری دارد.&quot; 
+احساس این جمله چگونه درک می‌شود؟</div>
+      <div class="three" style="margin-top:10px;">
+        <div>
+          <div class="key"><b>Gold</b></div>
+          <pre class="mono">برای تحلیل احساس جمله، بیایید آن را به بخش‌های مختلف تقسیم کنیم و لحن و معنی هر بخش را ارزیابی کنیم:
+
+1. &quot;آخرین بوسه احتمالاً هرگز به محبوبیت عروسی بزرگ و چاق یونانی نخواهد رسید,&quot;
+احساس در این بخش از جمله منفی است نسبت به &quot;آخرین بوسه&quot;، زیرا نشان می‌دهد که این فیلم به اندازه &quot;عروسی بزرگ و چاق یونانی&quot; محبوب نخواهد شد.
+
+2. &quot;اما صحنه مرکزی عروسی آن تأثیر بسیار بیشتری دارد.&quot;
+احساس در این بخش از جمله مثبت است نسبت به &quot;آخرین بوسه&quot; زیرا بر این نکته تأکید می‌کند که صحنه مرکزی عروسی فیلم تحریک‌آمیز و تأثیرگذار است که می‌تواند به عنوان یک جنبه مثبت دیده شود.
+
+در کل، احساس جمله می‌تواند به عنوان مختلط درک شود. بخش ابتدایی جمله نظر منفی دربارهٔ محبوبیت مورد انتظار فیلم را بیان می‌کند، در حالی که بخش دوم یک جنبه مثبت از فیلم را برجسته می‌کند، یعنی صحنه مرکزی عروسی تحریک‌آمیز با تأثیر قابل توجه.</pre>
+        </div>
+        <div>
+          <div class="key"><b>Base → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>برای تحلیل احساس</mark> <mark class='rep-add'>این جمله با استفاده از یک对比 و تمایز بین دو موضوع مختلف، به ما نشان می‌دهد که: **مرحله 1: مفهوم اصلی** * **مفهوم اصلی:** این جمله به طور مستقیم به موضوع &quot;بوسه&quot; در عروسی اشاره می‌کند و سپس با اشاره به &quot;حضور یونانی&quot; به موضوعی دیگر می‌پردازد. * **هدف:** هدف این</mark> جمله، <mark class='del'>بیایید آن را</mark> به <mark class='rep-del'>بخش‌های مختلف تقسیم کنیم و لحن و معنی هر بخش را ارزیابی کنیم: 1. &quot;آخرین بوسه احتمالاً هرگز</mark> <mark class='rep-add'>طور خاص،</mark> به <mark class='rep-del'>محبوبیت عروسی بزرگ و چاق یونانی نخواهد رسید,&quot; احساس در این بخش از جمله منفی است نسبت</mark> <mark class='rep-add'>عنوان یک توصیف،</mark> به <mark class='rep-del'>&quot;آخرین بوسه&quot;، زیرا</mark> <mark class='rep-add'>ما</mark> نشان می‌دهد که <mark class='rep-del'>این فیلم</mark> <mark class='rep-add'>بوسه در عروسی چه تأثیری دارد. **مرحله 2: تفاوت و تعارض** * **تفاوت:** اولین جمله</mark> به <mark class='rep-del'>اندازه &quot;عروسی بزرگ و چاق یونانی&quot; محبوب نخواهد شد. 2. &quot;اما صحنه مرکزی</mark> <mark class='rep-add'>بوسه در</mark> عروسی <mark class='rep-del'>آن تأثیر بسیار بیشتری دارد.&quot; احساس در این بخش از جمله مثبت است نسبت به &quot;آخرین بوسه&quot; زیرا بر این نکته تأکید</mark> <mark class='rep-add'>اشاره</mark> می‌کند که <mark class='rep-del'>صحنه مرکزی</mark> <mark class='rep-add'>به نظر می‌رسد یک رویداد عادی و معمول است. * **تعارض:** اما، جمله دوم به بوسه در</mark> عروسی <mark class='rep-del'>فیلم تحریک‌آمیز و تأثیرگذار است</mark> <mark class='rep-add'>اشاره می‌کند</mark> که <mark class='rep-del'>می‌تواند</mark> <mark class='rep-add'>به طور خاص</mark> به عنوان یک <mark class='rep-del'>جنبه مثبت دیده شود. در کل، احساس جمله می‌تواند به عنوان مختلط درک شود. بخش ابتدایی جمله نظر منفی دربارهٔ محبوبیت</mark> <mark class='rep-add'>&quot;صحنه مرکزی&quot;</mark> مورد <mark class='rep-del'>انتظار فیلم را بیان می‌کند، در حالی که بخش دوم یک جنبه مثبت از فیلم را برجسته می‌کند، یعنی صحنه مرکزی عروسی تحریک‌آمیز با تأثیر قابل توجه.</mark> <mark class='rep-add'>توجه قرار گرفته است. *</mark></pre>
+        </div>
+        <div>
+          <div class="key"><b>Classic-FT → Gold diff</b></div>
+          <pre class="mono">برای تحلیل احساس <mark class='add'>این</mark> جمله، بیایید <mark class='rep-del'>آن را</mark> <mark class='rep-add'>مرحله</mark> به <mark class='rep-del'>بخش‌های مختلف تقسیم کنیم و لحن و معنی هر بخش را ارزیابی کنیم:</mark> <mark class='rep-add'>مرحله پیش برویم:</mark> 1. <mark class='rep-del'>&quot;آخرین بوسه احتمالاً هرگز به محبوبیت عروسی بزرگ و چاق یونانی نخواهد رسید,&quot; احساس در این بخش از جمله منفی است نسبت به</mark> <mark class='rep-add'>شناسایی کلمات کلیدی:</mark> &quot;آخرین بوسه&quot;، <mark class='rep-del'>زیرا نشان می‌دهد که این فیلم به اندازه</mark> <mark class='rep-add'>&quot;محبوبیت&quot;،</mark> &quot;عروسی <mark class='rep-del'>بزرگ</mark> <mark class='rep-add'>بزرگ&quot;، &quot;چاق&quot;، &quot;یونانی&quot;، &quot;صحنه مرکزی&quot;</mark> و <mark class='rep-del'>چاق یونانی&quot; محبوب نخواهد شد.</mark> <mark class='rep-add'>&quot;تأثیر&quot;.</mark> 2. <mark class='rep-del'>&quot;اما صحنه مرکزی عروسی آن تأثیر بسیار بیشتری دارد.&quot;</mark> <mark class='rep-add'>تعیین</mark> احساس <mark class='rep-del'>در این بخش از جمله مثبت است نسبت به</mark> <mark class='rep-add'>مرتبط با کلمات کلیدی: -</mark> &quot;آخرین <mark class='rep-del'>بوسه&quot; زیرا بر این نکته تأکید می‌کند که صحنه مرکزی عروسی فیلم تحریک‌آمیز و تأثیرگذار است که می‌تواند</mark> <mark class='rep-add'>بوسه&quot;: خنثی یا کمی منفی (احتمالاً</mark> به عنوان یک <mark class='rep-del'>جنبه مثبت دیده شود. در کل، احساس جمله می‌تواند به عنوان مختلط درک شود. بخش ابتدایی جمله نظر منفی دربارهٔ محبوبیت</mark> <mark class='rep-add'>عمل غیر اصلی یا کمتر</mark> مورد انتظار <mark class='del'>فیلم را بیان می‌کند،</mark> در <mark class='rep-del'>حالی</mark> <mark class='rep-add'>نظر گرفته می‌شود) - &quot;محبوبیت&quot;: خنثی تا کمی مثبت (اگرچه به طور خاص به عروسی اشاره نمی‌کند، اما به این معناست</mark> که <mark class='rep-del'>بخش دوم</mark> <mark class='rep-add'>چیزی محبوب است) - &quot;عروسی بزرگ&quot;: مثبت (به عنوان</mark> یک <mark class='rep-del'>جنبه مثبت از فیلم را برجسته می‌کند، یعنی صحنه مرکزی عروسی تحریک‌آمیز با تأثیر قابل توجه.</mark> <mark class='rep-add'>اصطلاح برای توصیف یک رویداد مهم) - &quot;چاق&quot;: خنثی (اصطلاحی است که معمولاً برای توصیف اندازه بدن استفاده</mark></pre>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="card">
+      <div class="title">
+        <div><b>Example #4</b></div>
+        <div class="mono"><span class='pill'>len(gold)=41w</span> <span class='pill'>len(pre)=47w</span> <span class='pill'>len(post)=30w</span> <span class='pill'>overlap(pre)=0.01</span> <span class='pill'>overlap(post)=0.27</span> <span class='pill'>test_index=571</span></div>
+      </div>
+      <div class='key'><b>System</b>: شما یک دستیار هوش مصنوعی هستید. باید وظیفه را توصیف کرده و پاسخ خود را توضیح دهید. هنگام پاسخ به یک سوال چند گزینه‌ای، ابتدا پاسخ صحیح را ارائه دهید. سپس توضیح دهید که چرا سایر پاسخ‌ها اشتباه هستند. ممکن است برای پاسخ به سوال نیاز به استفاده از دانش اضافی داشته باشید.</div>
+      <div class="key"><b>Prompt</b></div>
+      <div class="mono">(سی‌ان‌ان) -- اعلام اینکه سال 2010 &quot;بهترین سال در عملکرد ایمنی در تاریخ شرکت ما&quot; بوده است، شرکت ترنس‌اوشن، مالک سکو نفتی در خلیج مکزیک که منفجر شد و 11 کارگر را کشت، به مدیران ارشد خود پاداش‌ها و افزایش حقوق قابل توجهی اعطا کرده است، طبق گزارشی اخیر به کمیسیون بورس و اوراق بهادار ایالات متحده. این شامل افزایش حقوق 200,000 دلاری برای استیون ال. نیومن، رئیس و مدیرعامل ترنس‌اوشن است که حقوق پایه او از 900,000 دلار به 1.1 میلیون دلار افزایش می‌یابد، طبق گزارش SEC. پاداش نیومن 374,062 دلار بود. همچنین نیومن یک بسته جبران خسارت بلندمدت 5.4 میلیون دلاری دارد که شرکت در زمان انتصاب او به عنوان مدیرعامل در مارس 2010 به او اعطا کرده است، طبق گزارش SEC. آخرین جوایز نقدی بخشی از آن بر اساس &quot;عملکرد شرکت در زمینه ایمنی&quot; است، طبق گزارش ترنس‌اوشن. &quot;با وجود از دست دادن غم‌انگیز زندگی در خلیج مکزیک، ما رکورد ایمنی آماری نمونه‌ای را به عنوان معیار نرخ کل حوادث قابل ثبت و نرخ شدت بالقوه کل به دست آوردیم&quot;، بیانیه SEC می‌گوید. &quot;بر اساس این استانداردها، ما بهترین سال در عملکرد ایمنی در تاریخ شرکت خود را ثبت کردیم.&quot; شرکت این رکورد را &quot;بازتابی از تعهد ما به دستیابی به محیطی بدون حادثه، همیشه و در همه جا&quot; نامید، طبق گزارش SEC. این شرکت به ایمیل سی‌ان‌ان که درخواست نظر داشت، پاسخ نداد. انفجار 20 آوریل 2010 در سکو دیپ‌واتر هورایزن 17 کارگر را مجروح و 11 نفر دیگر را کشت، از جمله نه کارمند ترنس‌اوشن، طبق گزارش SEC. این حادثه به عنوان بدترین نشت نفت در تاریخ ایالات متحده شناخته شده است. چاه سه ماه بعد مسدود شد، اما نه قبل از اینکه میلیون‌ها بشکه نفت به خلیج بریزد. در ژانویه، کمیسیون ملی رئیس‌جمهور باراک اوباما درباره نشت نفت دیپ‌واتر هورایزن و حفاری‌های دریایی گزارشی منتشر کرد که تقصیر این حادثه را بین ترنس‌اوشن، بی‌پی - که سکو را اجاره کرده بود - و هالیبرتون، که پوشش سیمانی سکو را نصب کرده بود، تقسیم کرد.
+
+پاسخ خود را انتخاب کنید: طبق پاراگراف بالا، پاسخ صحیح به سوال &quot;برخی از اثرات انفجار دیپ‌واتر هورایزن در سال 2010 را لیست کنید&quot; آیا &quot;کشته شدن 20 کارگر&quot; است؟
+
+از بین گزینه‌ها انتخاب کنید:
+الف). خیر.
+ب). بله.</div>
+      <div class="three" style="margin-top:10px;">
+        <div>
+          <div class="key"><b>Gold</b></div>
+          <pre class="mono">الف). خیر.
+
+پاسخ صحیح &quot;خیر&quot; است زیرا متن بیان می‌کند که انفجار دیپ‌واتر هورایزن 11 کارگر را کشت، نه 20 نفر. همچنین این انفجار 17 کارگر را مجروح کرد، اما سوال به طور خاص به تعداد کارگران کشته شده اشاره دارد.</pre>
+        </div>
+        <div>
+          <div class="key"><b>Base → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>الف). خیر. پاسخ صحیح &quot;خیر&quot; است زیرا متن بیان می‌کند که انفجار دیپ‌واتر هورایزن</mark> <mark class='rep-add'>**Answer:** b) بله. **Explanation:** The paragraph explicitly states that the explosion at Deepwater Horizon in April 2010 resulted in the deaths of</mark> 11 <mark class='rep-del'>کارگر را کشت، نه 20 نفر. همچنین این انفجار 17 کارگر را مجروح کرد، اما سوال به طور خاص به تعداد کارگران کشته شده اشاره دارد.</mark> <mark class='rep-add'>workers. Here&#x27;s why the other options are incorrect: * **a) No.** This is incorrect because the paragraph clearly states that 11 workers were killed.</mark></pre>
+        </div>
+        <div>
+          <div class="key"><b>Classic-FT → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>الف). خیر.</mark> <mark class='rep-add'>ب). بله.</mark> پاسخ صحیح <mark class='rep-del'>&quot;خیر&quot;</mark> <mark class='rep-add'>&quot;بله&quot;</mark> است زیرا <mark class='rep-del'>متن</mark> <mark class='rep-add'>پاراگراف</mark> بیان می‌کند که انفجار دیپ‌واتر هورایزن <mark class='add'>در سال 2010 منجر به کشته شدن</mark> 11 کارگر <mark class='rep-del'>را کشت، نه 20 نفر. همچنین این انفجار 17 کارگر را مجروح کرد، اما سوال به طور خاص به تعداد کارگران کشته شده اشاره دارد.</mark> <mark class='rep-add'>شد که یکی از اثرات آن بود.</mark></pre>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="card">
+      <div class="title">
+        <div><b>Example #5</b></div>
+        <div class="mono"><span class='pill'>len(gold)=13w</span> <span class='pill'>len(pre)=113w</span> <span class='pill'>len(post)=14w</span> <span class='pill'>overlap(pre)=0.01</span> <span class='pill'>overlap(post)=0.25</span> <span class='pill'>test_index=914</span></div>
+      </div>
+      <div class='key'><b>System</b>: شما یک دستیار هوش مصنوعی هستید. کاربر یک وظیفه به شما محول خواهد کرد. هدف شما این است که وظیفه را به بهترین شکل ممکن انجام دهید. در حین انجام وظیفه، مرحله به مرحله فکر کنید و مراحل خود را توجیه کنید.</div>
+      <div class="key"><b>Prompt</b></div>
+      <div class="mono">پلیس در کشمیر تحت کنترل هند به منظور جلوگیری از حملات بیشتر، امنیت را پس از انفجار بمب در پایتخت تابستانی این منطقه، سرینگر، که پس از چهار سال رخ داده است، افزایش داده است.
+این متن را در یک عبارت خلاصه کنید.</div>
+      <div class="three" style="margin-top:10px;">
+        <div>
+          <div class="key"><b>Gold</b></div>
+          <pre class="mono">افزایش امنیت در کشمیر تحت کنترل هند پس از انفجار بمب در سرینگر.</pre>
+        </div>
+        <div>
+          <div class="key"><b>Base → Gold diff</b></div>
+          <pre class="mono"><mark class='del'>افزایش امنیت</mark> در <mark class='rep-del'>کشمیر تحت کنترل هند پس از انفجار بمب در سرینگر.</mark> <mark class='rep-add'>aftermath of a bomb attack in Srinagar, India has increased security measures in Kashmir to prevent further attacks. **Explanation:** * **Concise Summary:** The text summarizes the situation by stating that police in Kashmir have increased security measures following a bomb attack in the capital city, Srinagar. * **Key Elements:** The summary highlights the key elements: location (Kashmir), the event (bomb attack), and the action taken (increased security). * **Clarity and Focus:** It focuses on the main point - increased security measures by the police in response to the bomb attack. Let me know if you&#x27;d like me to elaborate on any aspect of this summary or provide more details about the situation.</mark></pre>
+        </div>
+        <div>
+          <div class="key"><b>Classic-FT → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>افزایش</mark> <mark class='rep-add'>&quot;افزایش</mark> امنیت در کشمیر <mark class='rep-del'>تحت کنترل هند پس از</mark> <mark class='rep-add'>به دلیل</mark> انفجار بمب در <mark class='rep-del'>سرینگر.</mark> <mark class='rep-add'>سرینگر، پایتخت تابستانی این منطقه.&quot;</mark></pre>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="card">
+      <div class="title">
+        <div><b>Example #6</b></div>
+        <div class="mono"><span class='pill'>len(gold)=9w</span> <span class='pill'>len(pre)=36w</span> <span class='pill'>len(post)=6w</span> <span class='pill'>overlap(pre)=0.12</span> <span class='pill'>overlap(post)=0.17</span> <span class='pill'>test_index=1003</span></div>
+      </div>
+      <div class='key'><b>System</b>: شما یک دستیار هوش مصنوعی هستید که به خوبی دستورات را دنبال می‌کند. تا جایی که می‌توانید کمک کنید.</div>
+      <div class="key"><b>Prompt</b></div>
+      <div class="mono">اطلاعات:  - چارلز آتینگ (۱۲ مارس ۱۹۲۳ - ۱۱ اکتبر ۲۰۰۹) یک بازیکن فوتبال استرالیایی بود که در سن ۲۰ سالگی در سال ۱۹۴۳ برای تیم کالینگ‌وود بازی خود را آغاز کرد. او در طول ۸ فصل، ۱۷ گل از ۱۲۵ بازی به ثمر رساند. او نایب کاپیتان بود و در سال ۱۹۵۰، آخرین فصل خود، جایزه کاپولند را دریافت کرد و در سن ۲۷ سالگی به دلیل مشغله‌های خانوادگی از فوتبال کناره‌گیری کرد. آتینگ سپس از سال ۱۹۵۱ تا ۱۹۵۳ مربی تیم دوم کالینگ‌وود شد و از سال ۱۹۶۸ تا ۱۹۷۵ عضو کمیته بود و همچنین عضو افتخاری کالینگ‌وود به شمار می‌رفت. او همچنین برادرزاده ارن آتینگ بود که برای کالینگ‌وود و هاوتورن بازی کرده بود.  - باشگاه فوتبال کالینگ‌وود، که به نام مگ‌پایز یا به طور غیررسمی پایز شناخته می‌شود، یک باشگاه فوتبال استرالیایی است که در لیگ فوتبال استرالیا (AFL) بازی می‌کند. این باشگاه در سال ۱۸۹۲ تأسیس شد و نام آن از منطقه کالینگ‌وود در مرکز ملبورن گرفته شده است. این باشگاه در ابتدا در پارک ویکتوریا در ابوتسفورد مستقر بود و اکنون در منطقه ورزشی و تفریحی ملبورن واقع شده و بازی‌های خانگی خود را در زمین کریکت ملبورن برگزار می‌کند و پایگاه تمرین و اداری آن در میدان المپیک و مرکز هولدن است.  - اصطلاح &quot;بهترین و عادلانه‌ترین&quot; یا &quot;عادلانه‌ترین و بهترین&quot; در برخی مسابقات (مانند لیگ فوتبال استرالیای غربی) به طور معمول در ورزش استرالیا برای توصیف بازیکنانی که بهترین عملکرد را در یک بازی یا در طول یک فصل برای یک باشگاه ورزشی خاص داشته‌اند، استفاده می‌شود، در حالی که به دلیل رفتار نادرست یا نقض قوانین در آن فصل تعلیق نشده‌اند.  - فوتبال استرالیایی، که به طور رسمی به عنوان فوتبال استرالیایی شناخته می‌شود، اما همچنین به عنوان قوانین استرالیایی، فوتبال یا فوتی نیز نامیده می‌شود (و در برخی مناطق به عنوان AFL پس از لیگ فوتبال استرالیا بازاریابی می‌شود)، یک ورزش تماسی است که بین دو تیم متشکل از هجده بازیکن در یک زمین بیضی شکل، معمولاً یک زمین کریکت اصلاح شده، برگزار می‌شود.  - جایزه کاپولند E.W. یک جایزه فوتبال استرالیایی است که توسط باشگاه فوتبال کالینگ‌وود به بازیکنی که بهترین و عادلانه‌ترین عملکرد را در طول سال برای کالینگ‌وود داشته، اهدا می‌شود.    با توجه به اطلاعات ارائه شده، موجودیت‌های موضوع و شیء را که رابطه &quot;عضو تیم ورزشی&quot; دارند، انتخاب کنید.
+پاسخ به این سوال:</div>
+      <div class="three" style="margin-top:10px;">
+        <div>
+          <div class="key"><b>Gold</b></div>
+          <pre class="mono">موجودیت موضوع: چارلز آتینگ
+موجودیت شیء: باشگاه فوتبال کالینگ‌وود</pre>
+        </div>
+        <div>
+          <div class="key"><b>Base → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>موجودیت موضوع:</mark> <mark class='rep-add'>موجودیت‌های موضوع و شیء که رابطه &quot;عضو تیم ورزشی&quot; دارند، عبارتند از: * **چارلز آتینگ:** بازیکن فوتبال استرالیایی و نایب کاپیتان کالینگ‌وود. * **باشگاه فوتبال کالینگ‌وود:** باشگاه فوتبال استرالیایی که</mark> چارلز آتینگ <mark class='rep-del'>موجودیت شیء: باشگاه فوتبال کالینگ‌وود</mark> <mark class='rep-add'>در آن عضویت داشت.</mark></pre>
+        </div>
+        <div>
+          <div class="key"><b>Classic-FT → Gold diff</b></div>
+          <pre class="mono"><mark class='del'>موجودیت موضوع:</mark> چارلز آتینگ <mark class='rep-del'>موجودیت شیء: باشگاه فوتبال کالینگ‌وود</mark> <mark class='rep-add'>و برادرزاده‌اش، ارن آتینگ.</mark></pre>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="card">
+      <div class="title">
+        <div><b>Example #7</b></div>
+        <div class="mono"><span class='pill'>len(gold)=90w</span> <span class='pill'>len(pre)=136w</span> <span class='pill'>len(post)=136w</span> <span class='pill'>overlap(pre)=0.00</span> <span class='pill'>overlap(post)=0.23</span> <span class='pill'>test_index=1126</span></div>
+      </div>
+      <div class='key'><b>System</b>: شما یک دستیار هوش مصنوعی هستید. کاربر یک وظیفه به شما می‌دهد. هدف شما این است که وظیفه را به بهترین شکل ممکن انجام دهید. در حین انجام وظیفه، مرحله به مرحله فکر کنید و مراحل خود را توجیه کنید.</div>
+      <div class="key"><b>Prompt</b></div>
+      <div class="mono">لطفاً به سوال زیر پاسخ دهید: جان به سمت فرودگاه برای تعطیلات می‌رفت. کارسون چمدان‌ها را روی ماشین جان گذاشت. با توجه به این زمینه: کارسون بعداً چه احساسی خواهد داشت؟ گزینه‌های ممکن: احساس نیاز به استراحت، احساس خواب آلودگی، احساس هیجان
+A:</div>
+      <div class="three" style="margin-top:10px;">
+        <div>
+          <div class="key"><b>Gold</b></div>
+          <pre class="mono">A: احساس هیجان
+
+توجیه: با توجه به زمینه ارائه شده، به نظر می‌رسد که جان به تعطیلات می‌رود و کارسون با گذاشتن چمدان‌ها در ماشین به جان کمک می‌کند. احتمالاً کارسون برای جان هیجان‌زده است یا خوشحال است که می‌تواند کمک کند، که این می‌تواند باعث شود او بعد از انجام این کار احساس هیجان و شوق کند. گزینه‌های دیگر - نیاز به استراحت یا خواب آلودگی - هرچند ممکن است، اما زمینه کافی برای نشان دادن اینکه این احساسات مناسب‌ترین احساسات برای کارسون در این موقعیت هستند، وجود ندارد.</pre>
+        </div>
+        <div>
+          <div class="key"><b>Base → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>A: احساس هیجان توجیه: با توجه به زمینه ارائه شده، به نظر می‌رسد که جان به تعطیلات می‌رود و کارسون با گذاشتن چمدان‌ها در ماشین به جان کمک می‌کند. احتمالاً کارسون برای جان هیجان‌زده است یا خوشحال است که می‌تواند کمک کند، که این می‌تواند باعث شود او بعد از انجام این کار احساس هیجان و شوق کند. گزینه‌های دیگر - نیاز به استراحت یا خواب آلودگی - هرچند ممکن است، اما زمینه کافی برای نشان دادن اینکه این احساسات مناسب‌ترین احساسات برای کارسون در این موقعیت هستند، وجود ندارد.</mark> <mark class='rep-add'>Let&#x27;s break down the situation and predict how Carson might feel: **Understanding the Context:** * **Departure:** Carson is going to the airport for a vacation, indicating a positive and exciting event. * **Packing:** He packed his bags, which suggests he&#x27;s ready for the trip and anticipating fun activities. **Predicting Emotions:** Based on the context, here&#x27;s why Carson likely feels: * **Excitement:** The anticipation of a vacation is a major mood booster. The excitement of traveling and experiencing new things is natural. * **Anticipation:** He&#x27;s looking forward to the trip and the activities that await him. **Why not the other options?** * **Need for rest:** While travel can be tiring, it&#x27;s unlikely Carson would feel this way immediately after packing. * **Sleepiness:** Packing is usually done before leaving, so sleepiness wouldn&#x27;t be a strong feeling right then</mark></pre>
+        </div>
+        <div>
+          <div class="key"><b>Classic-FT → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>A: احساس هیجان توجیه:</mark> <mark class='rep-add'>برای تعیین اینکه کارسون بعداً چه احساسی خواهد داشت، بیایید هر گزینه را بررسی کنیم و ارتباط آن را</mark> با <mark class='del'>توجه به</mark> زمینه ارائه <mark class='rep-del'>شده، به نظر می‌رسد که جان به تعطیلات می‌رود و کارسون با گذاشتن چمدان‌ها در ماشین به جان کمک می‌کند. احتمالاً کارسون برای جان هیجان‌زده است یا خوشحال است که می‌تواند کمک کند، که این می‌تواند باعث شود او بعد از انجام این کار</mark> <mark class='rep-add'>شده تحلیل کنیم. گزینه 1:</mark> احساس <mark class='del'>هیجان و شوق کند. گزینه‌های دیگر -</mark> نیاز به استراحت <mark class='rep-del'>یا</mark> <mark class='rep-add'>- این گزینه ممکن است درست باشد زیرا سفر به سمت فرودگاه معمولاً خسته‌کننده است و نیاز به استراحت دارد. با این حال، اطلاعات کافی درباره احساسات کارسون در طول سفر نداریم تا تأیید کنیم که او بعداً احساس نیاز به استراحت می‌کند. گزینه 2: احساس</mark> خواب آلودگی - <mark class='rep-del'>هرچند ممکن است،</mark> <mark class='rep-add'>این گزینه نیز می‌تواند درست باشد زیرا سفر طولانی می‌تواند باعث خواب‌آلودگی شود.</mark> اما <mark class='rep-del'>زمینه کافی برای نشان دادن اینکه این</mark> <mark class='rep-add'>again، ما هیچ اطلاعاتی درباره</mark> احساسات <mark class='del'>مناسب‌ترین احساسات برای</mark> کارسون در <mark class='add'>طول سفر نداریم که بتوانیم نتیجه‌گیری کنیم که او بعداً احساس خواب‌آلودگی می‌کند. گزینه 3: احساس هیجان -</mark> این <mark class='rep-del'>موقعیت هستند، وجود ندارد.</mark> <mark class='rep-add'>گزینه کمتر محتمل است زیرا سفر به سمت فرودگاه معمولاً به عنوان یک رویداد خن</mark></pre>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="card">
+      <div class="title">
+        <div><b>Example #8</b></div>
+        <div class="mono"><span class='pill'>len(gold)=5w</span> <span class='pill'>len(pre)=5w</span> <span class='pill'>len(post)=5w</span> <span class='pill'>overlap(pre)=0.67</span> <span class='pill'>overlap(post)=1.00</span> <span class='pill'>test_index=2619</span></div>
+      </div>
+      <div class='key'><b>System</b>: شما یک دستیار مفید هستید که همیشه توضیحات ارائه می‌دهید. فکر کنید که در حال پاسخ دادن به یک کودک پنج ساله هستید.</div>
+      <div class="key"><b>Prompt</b></div>
+      <div class="mono">قطر فنجان ۹.۵ سانتی‌متر است.
+آیا می‌توانید این جمله را تکرار کنید، اما به درستی حروف بزرگ را استفاده کنید؟</div>
+      <div class="three" style="margin-top:10px;">
+        <div>
+          <div class="key"><b>Gold</b></div>
+          <pre class="mono">قطر فنجان ۹.۵ سانتی‌متر است.</pre>
+        </div>
+        <div>
+          <div class="key"><b>Base → Gold diff</b></div>
+          <pre class="mono">قطر فنجان <mark class='rep-del'>۹.۵</mark> <mark class='rep-add'>9.5</mark> سانتی‌متر است.</pre>
+        </div>
+        <div>
+          <div class="key"><b>Classic-FT → Gold diff</b></div>
+          <pre class="mono">قطر فنجان ۹.۵ سانتی‌متر است.</pre>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="card">
+      <div class="title">
+        <div><b>Example #9</b></div>
+        <div class="mono"><span class='pill'>len(gold)=45w</span> <span class='pill'>len(pre)=70w</span> <span class='pill'>len(post)=48w</span> <span class='pill'>overlap(pre)=0.05</span> <span class='pill'>overlap(post)=0.14</span> <span class='pill'>test_index=2771</span></div>
+      </div>
+      <div class='key'><b>System</b>: شما یک دستیار مفید هستید که همیشه توضیحات می‌دهید. طوری فکر کنید که انگار به یک کودک پنج ساله پاسخ می‌دهید.</div>
+      <div class="key"><b>Prompt</b></div>
+      <div class="mono">در گزارشی که توسط وزارت امور خارجه ایالات متحده تهیه شده، این کشورها در میان ۱۵ کشوری قرار دارند که استانداردهای حداقلی را برآورده نمی‌کنند و در این زمینه اقدام‌های مهمی انجام نمی‌دهند.
+
+این زبان چیست؟</div>
+      <div class="three" style="margin-top:10px;">
+        <div>
+          <div class="key"><b>Gold</b></div>
+          <pre class="mono">این زبان ترکی است. حالا بگذارید برایتان توضیح بدهم انگار پنج ساله هستید: تصور کنید راه‌های مختلفی برای صحبت کردن مردم با یکدیگر وجود دارد، مثل کدهای مختلف. این کد به نام ترکی شناخته می‌شود و توسط مردم یک کشور به نام ترکیه استفاده می‌شود.</pre>
+        </div>
+        <div>
+          <div class="key"><b>Base → Gold diff</b></div>
+          <pre class="mono"><mark class='add'>سلام!</mark> این <mark class='rep-del'>زبان ترکی است. حالا بگذارید برایتان توضیح بدهم انگار پنج ساله هستید: تصور کنید راه‌های مختلفی برای صحبت کردن مردم با یکدیگر وجود دارد،</mark> <mark class='rep-add'>گزارش درباره کشورهاست که کارشان خوب نیست و بعضی از چیزها را رعایت نمی کنند. مثلاً، بعضی از کشورها</mark> مثل <mark class='rep-del'>کدهای مختلف.</mark> <mark class='rep-add'>ما، خیلی خوب کار می کنند و همه چیز را رعایت می کنند. اما بعضی از کشورها، هنوز کارهای خوبی انجام نمی دهند.</mark> این <mark class='rep-del'>کد</mark> <mark class='rep-add'>گزارش</mark> به <mark class='rep-del'>نام ترکی شناخته می‌شود</mark> <mark class='rep-add'>ما کمک می کند تا بفهمیم که چه کشورهایی کارشان خوب نیست</mark> و <mark class='rep-del'>توسط مردم یک کشور</mark> <mark class='rep-add'>باید</mark> به <mark class='rep-del'>نام ترکیه استفاده می‌شود.</mark> <mark class='rep-add'>آنها کمک کنیم تا بهتر کار کنند.</mark></pre>
+        </div>
+        <div>
+          <div class="key"><b>Classic-FT → Gold diff</b></div>
+          <pre class="mono">این زبان <mark class='rep-del'>ترکی</mark> <mark class='rep-add'>فرانسوی</mark> است. <mark class='rep-del'>حالا بگذارید برایتان</mark> <mark class='rep-add'>اینجا یک</mark> توضیح <mark class='rep-del'>بدهم انگار پنج ساله هستید: تصور کنید راه‌های مختلفی</mark> <mark class='rep-add'>ساده: وزارت امور خارجه یک گروه از افراد است که با کشورهای دیگر صحبت می‌کنند تا همکاری کنند و به مسائل بین‌المللی رسیدگی کنند. آنها یک گزارش تهیه کردند که درباره کشورهایی صحبت می‌کند که کارهای خوبی</mark> برای <mark class='rep-del'>صحبت کردن مردم با یکدیگر وجود دارد، مثل کدهای مختلف. این کد به نام ترکی شناخته می‌شود و توسط مردم یک کشور به نام ترکیه استفاده می‌شود.</mark> <mark class='rep-add'>دیگران انجام نمی‌دهند.</mark></pre>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="card">
+      <div class="title">
+        <div><b>Example #10</b></div>
+        <div class="mono"><span class='pill'>len(gold)=97w</span> <span class='pill'>len(pre)=139w</span> <span class='pill'>len(post)=97w</span> <span class='pill'>overlap(pre)=0.01</span> <span class='pill'>overlap(post)=0.97</span> <span class='pill'>test_index=3016</span></div>
+      </div>
+      <div class='key'><b>System</b>: شما یک دستیار هوش مصنوعی هستید. کاربر یک وظیفه به شما محول خواهد کرد. هدف شما این است که وظیفه را به بهترین شکل ممکن انجام دهید. در حین انجام وظیفه، مرحله به مرحله فکر کنید و مراحل خود را توجیه کنید.</div>
+      <div class="key"><b>Prompt</b></div>
+      <div class="mono">خلاصه:
+
+عکس منتشر نشده‌ای از ملکه الیزابت و پسرش، پرنس چارلز، که توسط عکاس مد نیک نایت در کاخ ویندزور گرفته شده، منتشر شده است. این عکس قبل از شب پایانی جشن‌ها در نمایش اسب سلطنتی ویندزور در ماه مه گرفته شده و هدف آن نشان دادن &quot;گرما، انسانیت، قدرت و سنت&quot; بوده است. ملکه که در آوریل 90 ساله شد، این مناسبت را با مجموعه‌ای از رویدادها از جمله یک ضیافت خصوصی در کاخ ویندزور جشن گرفت. این پرتره جدید نشان‌دهنده آینده خاندان ویندزور است و یک ملکه 90 ساله را در کنار وارثش به تصویر می‌کشد.</div>
+      <div class="three" style="margin-top:10px;">
+        <div>
+          <div class="key"><b>Gold</b></div>
+          <pre class="mono">عکس منتشر نشده از ملکه الیزابت و پسرش، پرنس چارلز، که توسط عکاس مد نیک نایت در کاخ ویندزور گرفته شده، منتشر شده است. این عکس قبل از شب پایانی جشن‌ها در نمایش اسب سلطنتی ویندزور در ماه مه گرفته شده و هدف آن نشان دادن &quot;گرما، انسانیت، قدرت و سنت&quot; بوده است. ملکه که در آوریل 90 ساله شد، این مناسبت را با مجموعه‌ای از رویدادها از جمله یک ضیافت خصوصی در کاخ ویندزور جشن گرفت. این پرتره جدید نشان‌دهنده آینده خاندان ویندزور است و یک ملکه 90 ساله را در کنار وارثش به تصویر می‌کشد.</pre>
+        </div>
+        <div>
+          <div class="key"><b>Base → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>عکس منتشر نشده از ملکه الیزابت و پسرش، پرنس چارلز، که توسط عکاس مد نیک نایت در کاخ ویندزور گرفته شده، منتشر شده است. این عکس قبل از شب پایانی جشن‌ها در نمایش اسب سلطنتی ویندزور در ماه مه گرفته شده و هدف آن نشان دادن &quot;گرما، انسانیت، قدرت و سنت&quot; بوده است. ملکه که در آوریل</mark> <mark class='rep-add'>## Analyzing the Situation and Planning my Response **User&#x27;s Request:** I need you to write a concise summary of the photo of King Charles and Queen Elizabeth II taken at Windsor Castle. **My Task:** I need to understand the context, summarize the information provided, and deliver a clear and informative response. **Here&#x27;s how I will approach this task:** 1. **Understanding the Context:** * **The Photo:** The user wants a summary of a photo that has not been shared. * **Who is in the Photo:** It shows Queen Elizabeth II and Prince Charles. * **When was the Photo Taken:** Before the end of the Royal Horse Show in Windsor in May. * **Purpose of the Photo:** To show &quot;warmth, humanity, power, and tradition.&quot; * **Queen Elizabeth II&#x27;s Age:** She recently turned</mark> 90 <mark class='rep-del'>ساله شد، این مناسبت را با مجموعه‌ای از رویدادها از جمله یک ضیافت خصوصی در کاخ ویندزور جشن گرفت. این پرتره جدید نشان‌دهنده آینده خاندان ویندزور است و یک ملکه 90 ساله را در کنار وارثش به تصویر می‌کشد.</mark> <mark class='rep-add'>in April. * **Event:** The photo was taken</mark></pre>
+        </div>
+        <div>
+          <div class="key"><b>Classic-FT → Gold diff</b></div>
+          <pre class="mono">عکس منتشر <mark class='rep-del'>نشده</mark> <mark class='rep-add'>نشده‌ای</mark> از ملکه الیزابت و پسرش، پرنس چارلز، که توسط عکاس مد نیک نایت در کاخ ویندزور گرفته شده، منتشر شده است. این عکس قبل از شب پایانی جشن‌ها در نمایش اسب سلطنتی ویندزور در ماه مه گرفته شده و هدف آن نشان دادن &quot;گرما، انسانیت، قدرت و سنت&quot; بوده است. ملکه که در آوریل 90 ساله شد، این مناسبت را با مجموعه‌ای از رویدادها از جمله یک ضیافت خصوصی در کاخ ویندزور جشن گرفت. این پرتره جدید نشان‌دهنده آینده خاندان ویندزور است و یک ملکه 90 ساله را در کنار وارثش به تصویر می‌کشد.</pre>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="card">
+      <div class="title">
+        <div><b>Example #11</b></div>
+        <div class="mono"><span class='pill'>len(gold)=80w</span> <span class='pill'>len(pre)=111w</span> <span class='pill'>len(post)=119w</span> <span class='pill'>overlap(pre)=0.27</span> <span class='pill'>overlap(post)=0.45</span> <span class='pill'>test_index=3033</span></div>
+      </div>
+      <div class='key'><b>System</b>: شما یک دستیار هوش مصنوعی هستید. به شما یک وظیفه داده خواهد شد. شما باید یک پاسخ دقیق و طولانی تولید کنید.</div>
+      <div class="key"><b>Prompt</b></div>
+      <div class="mono">مفتی صیرفراز احمد نعیمی شهید، (اردو: ‎ )، (۱۶ فوریه ۱۹۴۸ – ۱۲ ژوئن ۲۰۰۹) یک عالم برجسته سنی اسلامی از پاکستان بود که به خاطر دیدگاه‌های معتدل و ضدتروریستی‌اش شناخته می‌شد. او در تاریخ ۱۲ ژوئن ۲۰۰۹ در یک بمب‌گذاری انتحاری در جامع نعیمیه لاهور، پاکستان کشته شد، پس از اینکه به‌طور علنی اقدامات تروریستی و ایدئولوژی‌های تحریک طالبان را به عنوان غیر اسلامی محکوم کرد.
+آیا می‌توانیم نتیجه‌گیری کنیم که:
+مفتی صیرفراز احمد نعیمی شهید، یک عالم برجسته سنی اسلامی از ایران بود. او در سال ۲۰۰۲ در یک بمب‌گذاری انتحاری در سومالی کشته شد، پس از اینکه به‌طور علنی اقدامات تروریستی و ایدئولوژی‌های تحریک طالبان را به عنوان غیر اسلامی محکوم کرد.</div>
+      <div class="three" style="margin-top:10px;">
+        <div>
+          <div class="key"><b>Gold</b></div>
+          <pre class="mono">خیر، ما نمی‌توانیم نتیجه‌گیری کنیم که مفتی صیرفراز احمد نعیمی شهید یک عالم برجسته سنی اسلامی از ایران بود یا اینکه او در سال ۲۰۰۲ در سومالی کشته شده است. اطلاعات اصلی بیان می‌کند که او از پاکستان بود و در تاریخ ۱۲ ژوئن ۲۰۰۹ در یک بمب‌گذاری انتحاری در جامع نعیمیه لاهور، پاکستان کشته شد. جزئیات ارائه شده در بیانیه دوم نادرست است و به‌طور دقیق زندگی و وقایع مربوط به مفتی صیرفراز احمد نعیمی شهید را نمایان نمی‌کند.</pre>
+        </div>
+        <div>
+          <div class="key"><b>Base → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>خیر، ما نمی‌توانیم نتیجه‌گیری کنیم که</mark> <mark class='rep-add'>متاسفانه، این جمله با اطلاعات موجود در متن و اطلاعات عمومی در مورد</mark> مفتی صیرفراز احمد نعیمی <mark class='rep-del'>شهید یک عالم برجسته سنی اسلامی</mark> <mark class='rep-add'>شهید، **کاملا غلط است.** **اینکه مفتی صیرفراز احمد نعیمی شهید،</mark> از ایران بود <mark class='rep-del'>یا اینکه او</mark> <mark class='rep-add'>و</mark> در سال ۲۰۰۲ در سومالی کشته <mark class='add'>شد، با توجه به اطلاعات ارائه</mark> شده <mark class='rep-del'>است.</mark> <mark class='rep-add'>در متن و منابع عمومی، ** **کاملا نادرست** **است.** **مطالعه متن و</mark> اطلاعات <mark class='rep-del'>اصلی بیان می‌کند که</mark> <mark class='rep-add'>عمومی نشان می‌دهد که:** * مفتی صیرفراز احمد نعیمی شهید، از **پاکستان** بود. *</mark> او <mark class='del'>از پاکستان بود و</mark> در <mark class='rep-del'>تاریخ ۱۲</mark> <mark class='rep-add'>**۱۲</mark> ژوئن <mark class='rep-del'>۲۰۰۹</mark> <mark class='rep-add'>۲۰۰۹**</mark> در یک بمب‌گذاری انتحاری در جامع نعیمیه لاهور، پاکستان کشته شد. <mark class='rep-del'>جزئیات ارائه شده در بیانیه دوم نادرست است و به‌طور دقیق زندگی و وقایع</mark> <mark class='rep-add'>**برای اطمینان از صحت اطلاعات، به منابع معتبر مانند:** * وبسایت های</mark> مربوط به <mark class='rep-del'>مفتی صیرفراز احمد نعیمی شهید را نمایان نمی‌کند.</mark> <mark class='rep-add'>حوزه علمیه * منابع scholarly * منابع خبری معتبر مراجع</mark></pre>
+        </div>
+        <div>
+          <div class="key"><b>Classic-FT → Gold diff</b></div>
+          <pre class="mono">خیر، <mark class='del'>ما</mark> نمی‌توانیم <mark class='add'>این</mark> نتیجه‌گیری <mark class='rep-del'>کنیم</mark> <mark class='rep-add'>را بکنیم. متن ارائه شده بیان می‌کند</mark> که مفتی صیرفراز احمد نعیمی <mark class='rep-del'>شهید</mark> <mark class='rep-add'>شهید،</mark> یک عالم برجسته سنی اسلامی از <mark class='rep-del'>ایران بود یا اینکه</mark> <mark class='rep-add'>پاکستان بود.</mark> او <mark class='del'>در سال ۲۰۰۲ در سومالی کشته شده است. اطلاعات اصلی بیان می‌کند که او از پاکستان بود و</mark> در تاریخ ۱۲ ژوئن ۲۰۰۹ در یک بمب‌گذاری انتحاری در جامع نعیمیه لاهور، پاکستان کشته <mark class='add'>شد، پس از اینکه به‌طور علنی اقدامات تروریستی و ایدئولوژی‌های تحریک طالبان را به عنوان غیر اسلامی محکوم کرد. متن همچنین اشاره می‌کند که او در سال ۲۰۰۲ در یک بمب‌گذاری انتحاری در سومالی کشته</mark> شد. <mark class='rep-del'>جزئیات</mark> <mark class='rep-add'>با این حال، اطلاعات</mark> ارائه شده <mark class='add'>به وضوح بیان می‌کند که او از پاکستان بود، نه ایران. علاوه بر این، او</mark> در <mark class='rep-del'>بیانیه دوم نادرست است و به‌طور دقیق زندگی و وقایع مربوط به</mark> <mark class='rep-add'>تاریخ ۱۲ ژوئن ۲۰۰۹ کشته شد، نه ۲۰۰۲. بنابراین، نتیجه‌گیری اینکه</mark> مفتی صیرفراز احمد نعیمی <mark class='rep-del'>شهید را نمایان نمی‌کند.</mark> <mark class='rep-add'>شهید، یک عالم برجسته س</mark></pre>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="card">
+      <div class="title">
+        <div><b>Example #12</b></div>
+        <div class="mono"><span class='pill'>len(gold)=10w</span> <span class='pill'>len(pre)=108w</span> <span class='pill'>len(post)=10w</span> <span class='pill'>overlap(pre)=0.07</span> <span class='pill'>overlap(post)=0.67</span> <span class='pill'>test_index=3037</span></div>
+      </div>
+      <div class='key'><b>System</b>: شما یک دستیار هوش مصنوعی هستید. به شما یک وظیفه داده خواهد شد. شما باید یک پاسخ دقیق و طولانی تولید کنید.</div>
+      <div class="key"><b>Prompt</b></div>
+      <div class="mono">به سوال زیر پاسخ دهید: مقاله زیر را آنلاین پیدا کرده‌ام، از آن برای پاسخ به سوال استفاده کنید: نام کوچک فردی که در آغوش تری می‌میرد چیست؟ تری از همسر رئیسش، سیلویا، دعوت می‌کند تا به آپارتمانش بیاید بعد از یک مهمانی اداری و آن دو به رختخواب می‌روند. بعداً، وقتی او در حمام است، سیلویا فریادهایی را از بیرون می‌شنود و به سمت پنجره برهنه می‌رود. او مردی را می‌بیند که به یک زن جوان حمله می‌کند و پنجره را باز می‌کند و مهاجم فرار می‌کند. وقتی رسانه‌ها خبر قتل یک زن جوان نزدیک آپارتمان تری را در آن شب گزارش می‌دهند، او فکر می‌کند که پلیس باید بداند سیلویا چه دیده است، اما برای محافظت از او ادعا می‌کند که در پنجره اتاق خواب بوده است. در یک صف شناسایی پلیس، نه او و نه قربانی، دنیس، قادر به شناسایی مهاجم، کارل، نیستند. با وجود شواهد ضعیف علیه او، کارل به خاطر حمله به محاکمه کشیده می‌شود و در طول مراحل دادرسی وکیل او ثابت می‌کند که از آنجا که تری نزدیک‌بین است، نمی‌تواند شاهد این حادثه بوده باشد. کارل آزاد می‌شود و نه تنها پلیس و دادستانی بلکه دنیس و سیلویا نیز از ناتوانی تری شگفت‌زده می‌شوند. در دادگاه، کارل سیلویا را به عنوان زنی که در پنجره بوده شناسایی می‌کند. تری که desperate است تا او را هشدار دهد، او را در یک اجرای باله پیدا می‌کند و به او می‌گوید که باید به پلیس برود، اما او از هرگونه مشارکت بیشتر امتناع می‌کند. وقتی او می‌رود، کامیون خاص کارل را در بیرون می‌بیند و دوباره به داخل rushed می‌شود. با این حال، او خیلی دیر می‌رسد، زیرا در تاریکی او به طرز کشنده‌ای چاقو خورده و در آغوش تری می‌میرد. او به دنیس پناه می‌برد، که ابتدا او را فریب می‌دهد و سپس فرصتی برای جبران به او می‌دهد. او انتقام می‌خواهد و با او طرحی برای تحریک کارل به حمله‌ای دیگر طراحی می‌کند. او با disguising خود به یک بار می‌رود که کارل در آنجا مشروب می‌نوشد و در دسترس بودن خود را علامت می‌زند. تری او را دنبال می‌کند وقتی که او برای رفتن به خانه خارج می‌شود و وقتی کارل حمله می‌کند، آن دو قادر به دفع او هستند. او فرار می‌کند، تنها برای اینکه توسط پلیسی که تری قبلاً به آن‌ها هشدار داده بود، دستگیر شود.
+پاسخ:</div>
+      <div class="three" style="margin-top:10px;">
+        <div>
+          <div class="key"><b>Gold</b></div>
+          <pre class="mono">نام کوچک فردی که در آغوش تری می‌میرد سیلویا است.</pre>
+        </div>
+        <div>
+          <div class="key"><b>Base → Gold diff</b></div>
+          <pre class="mono"><mark class='rep-del'>نام کوچک فردی</mark> <mark class='rep-add'>## تحلیل داستان &quot;آغوش تری&quot; این داستان یک داستان پیچیده با عناصر مختلفی از جمله جنایت، دسیسه، و پیچیدگی‌های انسانی است. **خلاصه داستان:** * **موضوع اصلی:** داستان حول یک ماجرای قتل و تلاش برای فرار از مجازات می باشد. * **شخصیت های اصلی:** * **تری:** مردی</mark> که در آغوش تری <mark class='rep-del'>می‌میرد</mark> <mark class='rep-add'>می‌میرد. * **سیلویا:** همسر رئیس تری. * **کارل:** مهاجم. * **دنیس:** مردی که</mark> سیلویا <mark class='rep-del'>است.</mark> <mark class='rep-add'>را در آغوش تری می‌میرد. * **خلاصه داستان:** کارل به دلیل حمله به یک زن جوان به محاکمه کشیده می‌شود. تری که شاهد این حادثه نبوده است، سعی می‌کند کارل را به پلیس ببرد اما او از هرگونه مشارکت بیشتر امتناع می‌کند. در نهایت</mark></pre>
+        </div>
+        <div>
+          <div class="key"><b>Classic-FT → Gold diff</b></div>
+          <pre class="mono">نام کوچک فردی که در آغوش تری <mark class='rep-del'>می‌میرد سیلویا</mark> <mark class='rep-add'>می‌میرد، دنیس</mark> است.</pre>
+        </div>
+      </div>
+    </section>
+    
+</div>
+</main>
+</body>
+</html>

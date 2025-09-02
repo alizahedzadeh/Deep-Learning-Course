@@ -1,0 +1,57 @@
+{
+  "session_timestamp": "20250831_061713",
+  "config": {
+    "model_name": "google/gemma-2-2b-it",
+    "dataset_repo": "miladmim/slim-orca-dedup-chat-50k-persian",
+    "max_length": 1024,
+    "virtual_tokens": 16,
+    "init_text": "You are a helpful Persian AI assistant. پاسخ‌ها باید دقیق، موجز و مستدل باشند.",
+    "num_epochs": 2,
+    "batch_size": 4,
+    "gradient_accumulation_steps": 8,
+    "learning_rate": 0.005,
+    "warmup_ratio": 0.03,
+    "eval_steps": 500,
+    "save_steps": 500,
+    "session_timestamp": "20250831_061713"
+  },
+  "dataset_stats": {
+    "original_size": 40458,
+    "after_cleaning": 39943,
+    "final_pairs": 39943,
+    "roles_found": [
+      "",
+      "assistant",
+      "system",
+      "کاربر",
+      "user",
+      "دستیار"
+    ],
+    "role_distribution": {
+      "system": 40459,
+      "user": 40023,
+      "assistant": 40413,
+      "": 5,
+      "کاربر": 1,
+      "دستیار": 1
+    }
+  },
+  "model_info": {
+    "trainable_params": 36864,
+    "total_params": 2614378752,
+    "trainable_ratio": 1.410048179583736e-05
+  },
+  "training_metrics": {
+    "final_train_loss": 1.340337902218014,
+    "training_duration_seconds": 17706.733041763306,
+    "test_eval_loss": 1.257443904876709,
+    "test_perplexity": 3.5164216817736844
+  },
+  "paths": {
+    "output_dir": "./gemma_soft_prompt/gemma2b_it_prompt_tuning_vt16_20250831_061713",
+    "adapter_dir": "./gemma_soft_prompt/gemma2b_it_prompt_tuning_vt16_20250831_061713/prompt_adapter",
+    "config_file": "./gemma_soft_prompt/config_20250831_061713.json",
+    "stats_file": "./gemma_soft_prompt/dataset_stats_20250831_061713.json",
+    "loss_curve": "./gemma_soft_prompt/gemma2b_it_prompt_tuning_vt16_20250831_061713/loss_curve.png"
+  }
+}
